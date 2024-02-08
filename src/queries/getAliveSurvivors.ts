@@ -17,7 +17,7 @@ export const getAlive = async () => {
     const price = await getLordsPrice();
     if (price) {
       client.user?.setActivity(`${price} USD`, {
-        state: `${price}`,
+        state: `LORDS/USD ${price}`,
         type: 4,
       });
     } else {
