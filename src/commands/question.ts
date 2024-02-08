@@ -31,7 +31,7 @@ export class Question extends Command {
     const response = await getPrediction(questionStatement, question as string);
 
     return interaction.editReply({
-      content: question + ":" + response,
+      content: question + "? " + response,
     });
   }
 }
