@@ -1,4 +1,4 @@
-import { sdk, twitterClient } from "../config.js";
+import { sdk } from "../config.js";
 import { client } from "../index.js";
 import { generateImage } from "../models/dalle/index.js";
 import { getPrediction } from "../models/index.js";
@@ -57,7 +57,7 @@ export const getDeadSurvivors = async () => {
 
                           getPrediction(summary, prediction).then(
                             (summarised_story: string) => {
-                              tweet(summarised_story, adventurer.id + ".png");
+                              // tweet(summarised_story, adventurer.id + ".png");
                             }
                           );
                         }
@@ -94,18 +94,18 @@ export const getLastActionBeforeDeath = async (id: number) => {
   }
 };
 
-const tweet = async (text: any, imagePath: string) => {
-  twitterClient.v1.uploadMedia(imagePath).then((mediaId) => {
-    twitterClient.v2.tweet(text, {
-      media: {
-        media_ids: [mediaId],
-      },
-    });
-  });
+// const tweet = async (text: any, imagePath: string) => {
+//   twitterClient.v1.uploadMedia(imagePath).then((mediaId) => {
+//     twitterClient.v2.tweet(text, {
+//       media: {
+//         media_ids: [mediaId],
+//       },
+//     });
+//   });
 
-  // await twitterClient.v2.tweet(text);
-  // await twitterClient.v1.uploadMedia(image);
-};
+//   // await twitterClient.v2.tweet(text);
+//   // await twitterClient.v1.uploadMedia(image);
+// };
 
 const downloadImage = async (url: string, path: string) => {
   const response = await fetch(url);

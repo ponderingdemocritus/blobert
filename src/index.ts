@@ -22,7 +22,7 @@ await client.login(process.env.DISCORD_TOKEN);
 
 console.log(`Polling GraphQL endpoint every ${POLL_INTERVAL} ms`);
 
-setInterval(getDeadSurvivors, POLL_INTERVAL);
+// setInterval(getDeadSurvivors, POLL_INTERVAL);
 
 setInterval(getAlive, POLL_INTERVAL * 3);
 
