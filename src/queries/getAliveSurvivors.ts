@@ -1,5 +1,14 @@
 import { client } from "../index.js";
 
+const activityStrings = [
+  "{price} USD - Lords",
+  "Don't ask me about the price",
+  "Fine, I'll tell you the price: {price} USD",
+];
+
+// Initialize a counter outside the getAlive function to keep track of the current activity index
+let currentActivityIndex = 0;
+
 export const getAlive = async () => {
   try {
     const getLordsPrice = async () => {
@@ -16,10 +25,20 @@ export const getAlive = async () => {
 
     const price = await getLordsPrice();
     if (price) {
-      client.user?.setActivity(`${price} USD`, {
-        state: `LORDS/USD ${price}`,
-        type: 4,
+      // Format the current activity string with the price
+      const activityString = activityStrings[currentActivityIndex].replace(
+        "{price}",
+        price
+      );
+
+      client.user?.setActivity(activityString, {
+        state: activityString,
+        type: 4, // Assuming type 4 is correct for your use case; adjust as necessary
       });
+
+      // Update the currentActivityIndex to cycle through the strings
+      currentActivityIndex =
+        (currentActivityIndex + 1) % activityStrings.length;
     } else {
       console.error("Price is undefined or not available.");
     }
