@@ -1,6 +1,14 @@
 import { Command } from "@sapphire/framework";
 import { getPrediction } from "../models/index.js";
 import { questionStatement } from "../models/statements/index.js";
+import { getImage } from "../contract/index.js";
+import sharp from "sharp";
+import { writeFile } from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class Question extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -29,9 +37,32 @@ export class Question extends Command {
     await interaction.deferReply();
 
     const response = await getPrediction(questionStatement, question as string);
+    const svgImage = await getImage(); // Assuming this returns the SVG content as a string or buffer
+
+    // Convert SVG to PNG using sharp
+    const pngBuffer = await sharp(Buffer.from(svgImage)).png().toBuffer();
+
+    // Save the PNG to a file
+    const imagePath = path.join(__dirname, "./blobert.png");
+    await writeFile(imagePath, pngBuffer);
+
+    const embed = {
+      title: question || "Question",
+      image: {
+        url: "attachment://blobert.png",
+      },
+      description: response,
+      url: "https://realms.world/collection/blobert",
+    };
 
     return interaction.editReply({
-      content: question + "? " + response,
+      embeds: [embed],
+      files: [
+        {
+          attachment: imagePath,
+          name: "blobert.png",
+        },
+      ],
     });
   }
 }

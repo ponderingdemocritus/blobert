@@ -6,6 +6,7 @@ import {
   getAlive,
 } from "./queries/index.js";
 import { POLL_INTERVAL } from "./config.js";
+import { getImage } from "./contract/index.js";
 
 export const client = new SapphireClient({
   intents: [
@@ -25,5 +26,7 @@ console.log(`Polling GraphQL endpoint every ${POLL_INTERVAL} ms`);
 // setInterval(getDeadSurvivors, POLL_INTERVAL);
 
 setInterval(getAlive, POLL_INTERVAL * 3);
+
+getImage();
 
 // setInterval(getTopAdventurers, POLL_INTERVAL * 3);
