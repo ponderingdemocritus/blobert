@@ -1,8 +1,8 @@
-import { sdk } from "../config.js";
+import { sdk, twitterClientV1 } from "../config.js";
 import { client } from "../index.js";
 import { generateImage, getText } from "../models/dalle/index.js";
 
-import { getRandomStatement } from "../models/statements/index.js";
+import { getRandomStatement, summary } from "../models/statements/index.js";
 import fs from "fs";
 import fetch from "node-fetch";
 import { MongoClient, Collection } from "mongodb";
@@ -131,6 +131,8 @@ async function processAdventurer(adventurer: any, channel: any) {
   await downloadImage(image as string, `${adventurer.id}.png`);
 
   await sendDiscordMessage(channel, adventurer, prediction, image as string);
+
+  await tweet(await getText(summary, prediction), `${adventurer.id}.png`);
 }
 
 async function sendDiscordMessage(
@@ -167,18 +169,15 @@ export const getLastActionBeforeDeath = async (id: number) => {
   }
 };
 
-// const tweet = async (text: any, imagePath: string) => {
-//   twitterClient.v1.uploadMedia(imagePath).then((mediaId) => {
-//     twitterClient.v2.tweet(text, {
-//       media: {
-//         media_ids: [mediaId],
-//       },
-//     });
-//   });
-
-//   // await twitterClient.v2.tweet(text);
-//   // await twitterClient.v1.uploadMedia(image);
-// };
+const tweet = async (text: any, imagePath: string) => {
+  await twitterClientV1.v1.uploadMedia(imagePath).then((mediaId) => {
+    twitterClientV1.v2.tweet(text, {
+      media: {
+        media_ids: [mediaId],
+      },
+    });
+  });
+};
 
 const downloadImage = async (url: string, path: string) => {
   const response = await fetch(url);

@@ -59,7 +59,12 @@ export const deathStatement4 = `
 export const summary =
   "Summarise this into a tweet length, don't use hashtags, keep the wit: \n {question}";
 
-export const allDeathStatements = [deathStatement];
+export const allDeathStatements = [
+  deathStatement,
+  deathStatement2,
+  deathStatement3,
+  deathStatement4,
+];
 
 // get random statement
 
