@@ -1,7 +1,7 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://survivor-mainnet-indexer.realms.world/graphql",
+  schema: "https://ls-indexer-sepolia.provable.games/graphql",
   documents: "src/**/*.graphql",
   generates: {
     "src/generated/graphql.ts": {

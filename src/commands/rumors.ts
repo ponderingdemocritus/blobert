@@ -1,5 +1,6 @@
 import { Command } from "@sapphire/framework";
-import { getPrediction } from "../models/index.js";
+import { getText } from "../models/dalle";
+// import { getPrediction } from "../models/index.js";
 
 export class Rumors extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -64,7 +65,7 @@ export class Rumors extends Command {
           title: interaction.options.getString("question")
             ? question
             : `Rumors.....`,
-          description: await getPrediction(question, question as string),
+          description: await getText(question, question as string),
         },
       ],
     });

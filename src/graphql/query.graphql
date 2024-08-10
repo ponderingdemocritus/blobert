@@ -23,7 +23,7 @@ query getLastActionsBeforeDeath($id: FeltValue!) {
     xp
     gold
     health
-    lastAction
+    lastUpdatedTime
     beastHealth
   }
   beasts(

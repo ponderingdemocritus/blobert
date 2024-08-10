@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-// import { any } from 'graphql-request/build/cjs/types';
+// import { GraphQLClientRequestHeaders } from "graphql-request/build/cjs/types";
 import { print } from "graphql";
 import gql from "graphql-tag";
 export type Maybe<T> = T | null;
@@ -34,6 +34,8 @@ export type Scalars = {
   DiscoveryValue: { input: any; output: any };
   FeltValue: { input: any; output: any };
   HexValue: { input: any; output: any };
+  ItemTierValue: { input: any; output: any };
+  ItemTypeValue: { input: any; output: any };
   ItemValue: { input: any; output: any };
   ObstacleValue: { input: any; output: any };
   SlotValue: { input: any; output: any };
@@ -47,28 +49,31 @@ export type Scalars = {
 
 export type Adventurer = {
   __typename?: "Adventurer";
-  actionsPerBlock?: Maybe<Scalars["FeltValue"]["output"]>;
+  battleActionCount?: Maybe<Scalars["FeltValue"]["output"]>;
   beastHealth?: Maybe<Scalars["FeltValue"]["output"]>;
+  birthDate?: Maybe<Scalars["String"]["output"]>;
   charisma?: Maybe<Scalars["FeltValue"]["output"]>;
   chest?: Maybe<Scalars["ItemValue"]["output"]>;
   createdTime?: Maybe<Scalars["String"]["output"]>;
+  customRenderer?: Maybe<Scalars["FeltValue"]["output"]>;
+  deathDate?: Maybe<Scalars["String"]["output"]>;
   dexterity?: Maybe<Scalars["FeltValue"]["output"]>;
+  entropy?: Maybe<Scalars["HexValue"]["output"]>;
   foot?: Maybe<Scalars["ItemValue"]["output"]>;
   gold?: Maybe<Scalars["FeltValue"]["output"]>;
+  goldenTokenId?: Maybe<Scalars["FeltValue"]["output"]>;
   hand?: Maybe<Scalars["ItemValue"]["output"]>;
   head?: Maybe<Scalars["ItemValue"]["output"]>;
   health?: Maybe<Scalars["FeltValue"]["output"]>;
   id?: Maybe<Scalars["FeltValue"]["output"]>;
   intelligence?: Maybe<Scalars["FeltValue"]["output"]>;
-  lastAction?: Maybe<Scalars["FeltValue"]["output"]>;
   lastUpdatedTime?: Maybe<Scalars["String"]["output"]>;
+  level?: Maybe<Scalars["FeltValue"]["output"]>;
   luck?: Maybe<Scalars["FeltValue"]["output"]>;
   name?: Maybe<Scalars["StringValue"]["output"]>;
   neck?: Maybe<Scalars["ItemValue"]["output"]>;
   owner?: Maybe<Scalars["HexValue"]["output"]>;
-  revealBlock?: Maybe<Scalars["FeltValue"]["output"]>;
   ring?: Maybe<Scalars["ItemValue"]["output"]>;
-  startBlock?: Maybe<Scalars["FeltValue"]["output"]>;
   statUpgrades?: Maybe<Scalars["FeltValue"]["output"]>;
   strength?: Maybe<Scalars["FeltValue"]["output"]>;
   timestamp?: Maybe<Scalars["String"]["output"]>;
@@ -79,29 +84,40 @@ export type Adventurer = {
   xp?: Maybe<Scalars["FeltValue"]["output"]>;
 };
 
+export type AdventurerRank = {
+  __typename?: "AdventurerRank";
+  adventurerId: Scalars["String"]["output"];
+  rank: Scalars["Int"]["output"];
+  totalAdventurers: Scalars["Int"]["output"];
+  xp: Scalars["Int"]["output"];
+};
+
 export type AdventurersFilter = {
-  actionsPerBlock?: InputMaybe<FeltValueFilter>;
+  battleActionCount?: InputMaybe<OrderByInput>;
   beastHealth?: InputMaybe<FeltValueFilter>;
+  birthDate?: InputMaybe<OrderByInput>;
   charisma?: InputMaybe<FeltValueFilter>;
   chest?: InputMaybe<FeltValueFilter>;
   createdTime?: InputMaybe<OrderByInput>;
+  customRenderer?: InputMaybe<OrderByInput>;
+  deathDate?: InputMaybe<OrderByInput>;
   dexterity?: InputMaybe<FeltValueFilter>;
+  entropy?: InputMaybe<HexValueFilter>;
   foot?: InputMaybe<FeltValueFilter>;
   gold?: InputMaybe<FeltValueFilter>;
+  goldenTokenId?: InputMaybe<OrderByInput>;
   hand?: InputMaybe<FeltValueFilter>;
   head?: InputMaybe<FeltValueFilter>;
   health?: InputMaybe<FeltValueFilter>;
   id?: InputMaybe<FeltValueFilter>;
   intelligence?: InputMaybe<FeltValueFilter>;
-  lastAction?: InputMaybe<FeltValueFilter>;
   lastUpdatedTime?: InputMaybe<DateTimeFilter>;
+  level?: InputMaybe<FeltValueFilter>;
   luck?: InputMaybe<FeltValueFilter>;
   name?: InputMaybe<StringFilter>;
   neck?: InputMaybe<FeltValueFilter>;
   owner?: InputMaybe<HexValueFilter>;
-  revealBlock?: InputMaybe<FeltValueFilter>;
   ring?: InputMaybe<FeltValueFilter>;
-  startBlock?: InputMaybe<FeltValueFilter>;
   statUpgrades?: InputMaybe<FeltValueFilter>;
   strength?: InputMaybe<FeltValueFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
@@ -113,29 +129,31 @@ export type AdventurersFilter = {
 };
 
 export type AdventurersOrderByInput = {
-  actionsPerBlock?: InputMaybe<OrderByInput>;
+  battleActionCount?: InputMaybe<OrderByInput>;
   beastHealth?: InputMaybe<OrderByInput>;
+  birthDate?: InputMaybe<OrderByInput>;
   charisma?: InputMaybe<OrderByInput>;
   chest?: InputMaybe<OrderByInput>;
   createdTime?: InputMaybe<OrderByInput>;
+  customRenderer?: InputMaybe<OrderByInput>;
+  deathDate?: InputMaybe<OrderByInput>;
   dexterity?: InputMaybe<OrderByInput>;
+  entropy?: InputMaybe<OrderByInput>;
   foot?: InputMaybe<OrderByInput>;
   gold?: InputMaybe<OrderByInput>;
+  goldenTokenId?: InputMaybe<OrderByInput>;
   hand?: InputMaybe<OrderByInput>;
   head?: InputMaybe<OrderByInput>;
   health?: InputMaybe<OrderByInput>;
   id?: InputMaybe<OrderByInput>;
   intelligence?: InputMaybe<OrderByInput>;
-  lastAction?: InputMaybe<OrderByInput>;
   lastUpdatedTime?: InputMaybe<OrderByInput>;
   level?: InputMaybe<OrderByInput>;
   luck?: InputMaybe<OrderByInput>;
   name?: InputMaybe<OrderByInput>;
   neck?: InputMaybe<OrderByInput>;
   owner?: InputMaybe<OrderByInput>;
-  revealBlock?: InputMaybe<OrderByInput>;
   ring?: InputMaybe<OrderByInput>;
-  startBlock?: InputMaybe<OrderByInput>;
   statUpgrades?: InputMaybe<OrderByInput>;
   strength?: InputMaybe<OrderByInput>;
   timestamp?: InputMaybe<OrderByInput>;
@@ -238,6 +256,7 @@ export type Beast = {
   special1?: Maybe<Scalars["Special1Value"]["output"]>;
   special2?: Maybe<Scalars["Special2Value"]["output"]>;
   special3?: Maybe<Scalars["Special3Value"]["output"]>;
+  tier?: Maybe<Scalars["FeltValue"]["output"]>;
   timestamp?: Maybe<Scalars["String"]["output"]>;
 };
 
@@ -266,6 +285,7 @@ export type BeastsFilter = {
   special1?: InputMaybe<Special1Filter>;
   special2?: InputMaybe<Special2Filter>;
   special3?: InputMaybe<Special3Filter>;
+  tier?: InputMaybe<FeltValueFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
 };
 
@@ -281,6 +301,7 @@ export type BeastsOrderByInput = {
   special1?: InputMaybe<OrderByInput>;
   special2?: InputMaybe<OrderByInput>;
   special3?: InputMaybe<OrderByInput>;
+  tier?: InputMaybe<OrderByInput>;
   timestamp?: InputMaybe<OrderByInput>;
 };
 
@@ -377,6 +398,15 @@ export type Discovery = {
   xpEarnedItems?: Maybe<Scalars["FeltValue"]["output"]>;
 };
 
+export type DiscoveryBattle = Battle | Discovery;
+
+export type DiscoveryOrBattle = {
+  __typename?: "DiscoveryOrBattle";
+  data: DiscoveryBattle;
+  timestamp: Scalars["String"]["output"];
+  type: Scalars["String"]["output"];
+};
+
 export type FeltValueFilter = {
   In?: InputMaybe<Array<Scalars["FeltValue"]["input"]>>;
   eq?: InputMaybe<Scalars["FeltValue"]["input"]>;
@@ -401,15 +431,19 @@ export type Item = {
   __typename?: "Item";
   adventurerId?: Maybe<Scalars["FeltValue"]["output"]>;
   equipped?: Maybe<Scalars["Boolean"]["output"]>;
+  greatness?: Maybe<Scalars["FeltValue"]["output"]>;
   isAvailable?: Maybe<Scalars["Boolean"]["output"]>;
   item?: Maybe<Scalars["ItemValue"]["output"]>;
   owner?: Maybe<Scalars["Boolean"]["output"]>;
   ownerAddress?: Maybe<Scalars["HexValue"]["output"]>;
   purchasedTime?: Maybe<Scalars["String"]["output"]>;
+  slot?: Maybe<Scalars["SlotValue"]["output"]>;
   special1?: Maybe<Scalars["Special1Value"]["output"]>;
   special2?: Maybe<Scalars["Special2Value"]["output"]>;
   special3?: Maybe<Scalars["Special3Value"]["output"]>;
+  tier?: Maybe<Scalars["ItemTierValue"]["output"]>;
   timestamp?: Maybe<Scalars["String"]["output"]>;
+  type?: Maybe<Scalars["ItemTypeValue"]["output"]>;
   xp?: Maybe<Scalars["FeltValue"]["output"]>;
 };
 
@@ -426,33 +460,67 @@ export type ItemFilter = {
   startsWith?: InputMaybe<Scalars["ItemValue"]["input"]>;
 };
 
+export type ItemTierFilter = {
+  In?: InputMaybe<Array<Scalars["ItemTierValue"]["input"]>>;
+  contains?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  endsWith?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  eq?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  gt?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  gte?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  lt?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  lte?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  notIn?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+  startsWith?: InputMaybe<Scalars["ItemTierValue"]["input"]>;
+};
+
+export type ItemTypeFilter = {
+  In?: InputMaybe<Array<Scalars["ItemTypeValue"]["input"]>>;
+  contains?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  endsWith?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  eq?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  gt?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  gte?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  lt?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  lte?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  notIn?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+  startsWith?: InputMaybe<Scalars["ItemTypeValue"]["input"]>;
+};
+
 export type ItemsFilter = {
   adventurerId?: InputMaybe<FeltValueFilter>;
   equipped?: InputMaybe<BooleanFilter>;
+  greatness?: InputMaybe<FeltValueFilter>;
   isAvailable?: InputMaybe<BooleanFilter>;
   item?: InputMaybe<ItemFilter>;
   owner?: InputMaybe<BooleanFilter>;
   ownerAddress?: InputMaybe<HexValueFilter>;
   purchasedTime?: InputMaybe<DateTimeFilter>;
+  slot?: InputMaybe<SlotFilter>;
   special1?: InputMaybe<Special1Filter>;
   special2?: InputMaybe<Special2Filter>;
   special3?: InputMaybe<Special3Filter>;
+  tier?: InputMaybe<ItemTierFilter>;
   timestamp?: InputMaybe<DateTimeFilter>;
+  type?: InputMaybe<ItemTypeFilter>;
   xp?: InputMaybe<FeltValueFilter>;
 };
 
 export type ItemsOrderByInput = {
   adventurerId?: InputMaybe<OrderByInput>;
   equipped?: InputMaybe<OrderByInput>;
+  greatness?: InputMaybe<OrderByInput>;
   isAvailable?: InputMaybe<OrderByInput>;
   item?: InputMaybe<OrderByInput>;
   owner?: InputMaybe<OrderByInput>;
   ownerAddress?: InputMaybe<OrderByInput>;
   purchasedTime?: InputMaybe<OrderByInput>;
+  slot?: InputMaybe<OrderByInput>;
   special1?: InputMaybe<OrderByInput>;
   special2?: InputMaybe<OrderByInput>;
   special3?: InputMaybe<OrderByInput>;
+  tier?: InputMaybe<OrderByInput>;
   timestamp?: InputMaybe<OrderByInput>;
+  type?: InputMaybe<OrderByInput>;
   xp?: InputMaybe<OrderByInput>;
 };
 
@@ -476,12 +544,23 @@ export type OrderByInput = {
 
 export type Query = {
   __typename?: "Query";
+  adventurerRank?: Maybe<AdventurerRank>;
   adventurers: Array<Adventurer>;
   battles: Array<Battle>;
   beasts: Array<Beast>;
+  countAliveAdventurers: Scalars["Int"]["output"];
+  countDeadAdventurers: Scalars["Int"]["output"];
+  countDiscoveriesAndBattles: Scalars["Int"]["output"];
+  countTotalAdventurers: Scalars["Int"]["output"];
   discoveries: Array<Discovery>;
+  discoveriesAndBattles: Array<DiscoveryOrBattle>;
   items: Array<Item>;
   scores: Array<Score>;
+};
+
+export type QueryAdventurerRankArgs = {
+  adventurerId: Scalars["Int"]["input"];
+  adventurerXp: Scalars["Int"]["input"];
 };
 
 export type QueryAdventurersArgs = {
@@ -505,11 +584,29 @@ export type QueryBeastsArgs = {
   where?: InputMaybe<BeastsFilter>;
 };
 
+export type QueryCountAliveAdventurersArgs = {
+  owner?: InputMaybe<Scalars["HexValue"]["input"]>;
+};
+
+export type QueryCountDiscoveriesAndBattlesArgs = {
+  adventurerId?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
+export type QueryCountTotalAdventurersArgs = {
+  owner?: InputMaybe<Scalars["HexValue"]["input"]>;
+};
+
 export type QueryDiscoveriesArgs = {
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   orderBy?: InputMaybe<DiscoveriesOrderByInput>;
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<DiscoveriesFilter>;
+};
+
+export type QueryDiscoveriesAndBattlesArgs = {
+  limit?: Scalars["Int"]["input"];
+  skip?: Scalars["Int"]["input"];
+  where?: InputMaybe<ItemsFilter>;
 };
 
 export type QueryItemsArgs = {
@@ -652,7 +749,7 @@ export type GetLastActionsBeforeDeathQuery = {
     xp?: any | null;
     gold?: any | null;
     health?: any | null;
-    lastAction?: any | null;
+    lastUpdatedTime?: string | null;
     beastHealth?: any | null;
   }>;
   beasts: Array<{
@@ -743,7 +840,7 @@ export const GetLastActionsBeforeDeathDocument = gql`
       xp
       gold
       health
-      lastAction
+      lastUpdatedTime
       beastHealth
     }
     beasts(

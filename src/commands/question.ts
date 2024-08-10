@@ -1,11 +1,11 @@
 import { Command } from "@sapphire/framework";
-import { getPrediction } from "../models/index.js";
 import { questionStatement } from "../models/statements/index.js";
 import { getImage } from "../contract/index.js";
 import sharp from "sharp";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getText } from "../models/dalle/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,7 +36,7 @@ export class Question extends Command {
 
     await interaction.deferReply();
 
-    const response = await getPrediction(questionStatement, question as string);
+    const response = await getText(questionStatement, question as string);
     const svgImage = await getImage(); // Assuming this returns the SVG content as a string or buffer
 
     // Convert SVG to PNG using sharp

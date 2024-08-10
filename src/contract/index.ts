@@ -12,23 +12,29 @@ export const getImage = async () => {
   const provider = new RpcProvider({ nodeUrl: process.env.BLAST_API });
 
   const blobert = new Contract(ABI, blobertAddress, provider);
-
   const image = await blobert.call("svg_image", [getRandomNumber(1, 4844)]);
 
-  // Assuming `image.data` is the array provided
-  // @ts-ignore
-  const svgParts = image.data.map((part) => {
-    return shortString.decodeShortString(part);
-  });
+  // console.log(image);
 
-  // @ts-ignore
-  const pendingWordHex = shortString.decodeShortString(image.pending_word);
-  svgParts.push(pendingWordHex);
+  // let svgParts: string[] = [];
+  // if (typeof image === "string") {
+  //   svgParts = [shortString.decodeShortString(image)];
+  // } else if (Array.isArray(image)) {
+  //   svgParts = image.map((part) => {
+  //     if (typeof part === "string") {
+  //       return shortString.decodeShortString(part);
+  //     }
+  //     return "";
+  //   });
+  // }
 
-  // Concatenate all parts to form the full SVG image
-  const svgImage = svgParts.join("");
+  // const pendingWordHex = shortString.decodeShortString(image.pending_word);
+  // svgParts.push(pendingWordHex);
 
-  console.log(svgImage);
+  // // Concatenate all parts to form the full SVG image
+  // const svgImage = svgParts.join("");
 
-  return svgImage;
+  // console.log(svgImage);
+
+  return "svgImage";
 };
