@@ -72,7 +72,7 @@ query getNewSurvivors {
 
 query getDeadSurvivors {
   adventurers(
-    limit: 2
+    limit: 5
     where: { health: { eq: 0 }, xp: { gt: 20 } }
     orderBy: { timestamp: { desc: true } }
   ) {
