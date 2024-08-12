@@ -22,7 +22,7 @@ export async function generateImage(prompt: string, retries = 1) {
         const image = await fal.subscribe("fal-ai/flux-pro", {
           input: {
             prompt:
-              "turn this into a dark souls themed pixel scene, make the beasts scary. Use this as an example: A survivor rendered in dark souls like pixel art style. The image should have a 128 x 128 resolution, with vibrant and contrasting colors. Include a dark scary, [insert the beast in the prompt] in the scene. The style should evoke a nostalgic8 bit early RPGs feel, with clear and simple shapes, minimal shading, and attention to pixel detail." +
+              "turn this into a dark souls themed pixel scene, make the beasts scary. Use this as an example: A survivor rendered in dark souls like pixel art style. The image should have a 128 x 128 resolution, with vibrant and contrasting colors. Include a dark scary, [insert the beast in the prompt] in the scene. The style should evoke a nostalgic 8 bit early RPGs feel, with clear and simple shapes, minimal shading, and attention to pixel detail." +
               prompt,
           },
           logs: true,
