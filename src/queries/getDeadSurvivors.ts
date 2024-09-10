@@ -132,7 +132,7 @@ async function processAdventurer(adventurer: any, channel: any) {
 
   await sendDiscordMessage(channel, adventurer, prediction, image as string);
 
-  await tweet(await getText(summary, prediction), `${adventurer.id}.png`);
+  // await tweet(await getText(summary, prediction), `${adventurer.id}.png`);
 }
 
 async function sendDiscordMessage(
