@@ -171,7 +171,7 @@ export const getLastActionBeforeDeath = async (id: number) => {
 
 const tweet = async (text: any, imagePath: string) => {
   await twitterClientV1.v1.uploadMedia(imagePath).then((mediaId) => {
-    twitterClientV1.v2.tweet(text + "https://lootsurvivor.io", {
+    twitterClientV1.v2.tweet(text + " " + "https://lootsurvivor.io", {
       media: {
         media_ids: [mediaId],
       },
