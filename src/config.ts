@@ -1,10 +1,6 @@
 import { getSdk } from "./generated/graphql.js";
 import { GraphQLClient } from "graphql-request";
-import {
-  TwitterApi,
-  TwitterApiOAuth2Init,
-  TwitterApiTokens,
-} from "twitter-api-v2";
+import { TwitterApi, TwitterApiTokens } from "twitter-api-v2";
 
 export const GRAPHQL_ENDPOINT =
   "https://ls-indexer-sepolia.provable.games/graphql";
