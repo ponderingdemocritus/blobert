@@ -37,7 +37,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "serve": "bun run dist/src/index.js",
+    "start": "bun run dist/src/index.js",
     "codegen": "graphql-codegen"
   }
 }
