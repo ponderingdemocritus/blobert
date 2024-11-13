@@ -1,10 +1,6 @@
 import { client } from "../index.js";
 
-const activityStrings = [
-  "{price} USD - Lords",
-  "Don't ask me about the price",
-  "Fine, I'll tell you the price: {price} USD",
-];
+const activityStrings = ["{price} USD"];
 
 // Initialize a counter outside the getAlive function to keep track of the current activity index
 let currentActivityIndex = 0;
